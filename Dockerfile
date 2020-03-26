@@ -1,5 +1,5 @@
 FROM python:alpine3.10
-MAINTAINER xWaterBottlex
+MAINTAINER WaterBottle
 
 ENV PYTHONUNBUFFERED 1
 
