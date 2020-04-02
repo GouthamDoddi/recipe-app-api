@@ -12,7 +12,7 @@ class UserAdmin(BaseUserAdmin):
         (_('Personal Info'), {'fields': ('name',)}),
         (
             _('Permissions'),
-            {'fields': 
+            {'fields':
             ('is_active', 'is_staff', 'is_superuser')}
         ),
         (
@@ -20,10 +20,11 @@ class UserAdmin(BaseUserAdmin):
         )
      )
     add_fieldsets = (
-         (None, {  
+         (None, {
                  'classes': ('wide',),
                  'fields': ('email', 'password1', 'password2')
              }),
      )
+
 
 admin.site.register(models.User, UserAdmin)
