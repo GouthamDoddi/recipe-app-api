@@ -1,9 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.urls import reverse
-from django.test import TestCase
 
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 
 from core.models import Tag
@@ -13,11 +12,8 @@ from recipe.serializers import TagSerializer
 TAGS_URL = reverse('recipe:tag-list')
 
 
-class PublicTagApiTests(TestCase):
+class PublicTagApiTests(APITestCase):
     """Test the publicly available Tag api"""
-
-    def setup(self):
-        self.client = APIClient()
 
     def test_login_required(self):
         """Test that login is required"""
@@ -26,7 +22,7 @@ class PublicTagApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
-class PrivateTagsApiTests(TestCase):
+class PrivateTagsApiTests(APITestCase):
     """Test the authorized user tags API"""
 
     def setUp(self):
@@ -34,7 +30,7 @@ class PrivateTagsApiTests(TestCase):
            email='testman@mansmail.com',
            password='test123',
         )
-        self.client = APIClient()
+        # self.client = APIClient()
 
         self.client.force_authenticate(self.user)
 
