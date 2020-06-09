@@ -36,7 +36,7 @@ class PublicUserApiTests(TestCase):
         self.assertNotIn('password', res.data)
 
     def test_user_exits(self):
-        """test that if user already exists fails"""
+        """test that if user already exists post data fails"""
         payload = {'email': 'test@londonappdev.com', 'password': 'testpass',
                    'name': 'Test'}
         create_user(**payload)
