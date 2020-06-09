@@ -8,7 +8,7 @@ from rest_framework import status
 
 from recipe.serializers import IngredientSerializer
 
-Ingredient_URL = reverse('recipe:ingredient-list')
+INGREDIENT_URL = reverse('recipe:ingredient-list')
 
 
 class PublicIngredientApiTests(APITestCase):
@@ -17,7 +17,7 @@ class PublicIngredientApiTests(APITestCase):
     def test_login_required(self):
         """Test that login is required to access the end point"""
 
-        res = self.client.get(Ingredient_URL)
+        res = self.client.get(INGREDIENT_URL)
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
@@ -37,7 +37,7 @@ class PrivateIngredientsApiTest(APITestCase):
         Ingredient.objects.create(user=self.user, name='banana')
         Ingredient.objects.create(user=self.user, name='salt')
 
-        res = self.client.get(Ingredient_URL)
+        res = self.client.get(INGREDIENT_URL)
 
         ingredients = Ingredient.objects.all().order_by('-name')
         serializer = IngredientSerializer(ingredients, many=True)
@@ -56,9 +56,27 @@ class PrivateIngredientsApiTest(APITestCase):
             name='Tumeric'
         )
 
-        res = self.client.get(Ingredient_URL)
+        res = self.client.get(INGREDIENT_URL)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(len(res.data), 1)
         self.assertNotIn(res.data, [ingredients])
         self.assertEqual(res.data[0]['name'], ingredients.name)
+
+    def test_crete_ingredient_successful(self):
+        """Test create a new ingredients"""
+        payload = {'name': 'cabbage'}
+        self.client.post(INGREDIENT_URL, payload)
+
+        exists = Ingredient.objects.filter(
+            user=self.user,
+            name=payload['name'],
+        ).exists()
+        self.assertTrue(exists)
+
+    def test_create_ingredients_invalid(self):
+        """Test creating invalid ingredients fails"""
+        payload = {'name': ''}
+        res = self.client.post(INGREDIENT_URL, payload)
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
