@@ -15,7 +15,7 @@ RECIPE_URL = reverse('recipe:recipe-list')
 def detail_url(recipe_id):
     """Return recipe detail url"""
     return reverse('recipe:recipe-detail', args=[recipe_id])
-    
+
 
 def sample_tag(user, name='Main course'):
     """Create and return a sample tag"""
@@ -70,7 +70,7 @@ class PrivateRecipeApiTest(APITestCase):
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
-        
+
     def test_recipes_limited_to_user(self):
         """Test that the only logged in users can access recipes"""
         user2 = get_user_model().objects.create_user(
