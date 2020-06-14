@@ -41,7 +41,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
-class RecipeDetailSerializer(serializers.ModelSerializer):
+class RecipeDetailSerializer(RecipeSerializer):
     """Serializer recipe detail by basing the RecipeSerializer class"""
     ingredients = IngredientSerializer(many=True, read_only=True)
     tag = TagSerializer(many=True, read_only=True)
