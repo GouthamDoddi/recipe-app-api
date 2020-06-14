@@ -40,3 +40,16 @@ class RecipeSerializer(serializers.ModelSerializer):
                   'price', 'link')
         read_only_fields = ('id',)
 
+
+class RecipeDetailSerializer(serializers.ModelSerializer):
+    """Serializer recipe detail by basing the RecipeSerializer class"""
+    ingredients = IngredientSerializer(many=True, read_only=True)
+    tag = TagSerializer(many=True, read_only=True)
+
+    # class Meta: // rather then using the Meta class similar to
+    #             // list class we can actually inherit the
+    #             // list class
+    #     model = Recipe
+    #     fields = ('id', 'title', 'tag', 'time_minutes', 'ingredients',
+    #               'price', 'link')
+    #     read_only_fields = ('id',)
