@@ -116,7 +116,7 @@ class PrivateRecipeApiTest(APITestCase):
         for key in payload.keys():
             self.assertEqual(payload[key], getattr(recipe, key))
 
-    def  test_create_recipe_with_tags(self):
+    def test_create_recipe_with_tags(self):
         """Test creating a recipe with tags"""
         tag1 = sample_tag(self.user, name='Vegan')
         tag2 = sample_tag(self.user, name='Desert')
